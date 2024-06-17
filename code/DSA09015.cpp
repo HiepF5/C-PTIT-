@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+#define ll long long
+using namespace std;
+string str="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+int n,m;
+
+int color[1001];
+bool DFS(vector<int>v[1001],int u, int par)
+{
+    color[u]=1;
+    for(int i:v[u])
+    if(color[i]==0){if(DFS(v,i,u))return true;}
+    else if(color[i]==1)return true;
+    color[u]=2;
+    return false;
+}
+main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+    vector<int>v[1001];
+        cin>>n>>m;
+    for(int i=0;i<m;i++)
+    {
+        int x,y;
+        cin>>x>>y;
+        v[x].push_back(y);
+       // v[y].push_back(x);
+    }
+    memset(color,0, sizeof(color));
+    int ok=0;
+    for(int i=1;i<=n;i++)
+        if(color[i]==0&&DFS(v,i,0)){ok=1;}
+
+    if(ok==0) cout<<"NO"<<endl;
+    else cout<<"YES"<<endl;
+}
+}
